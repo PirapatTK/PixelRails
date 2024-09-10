@@ -19,7 +19,8 @@ FROM base as build
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential pkg-config && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives && \
+    apt-get purge -y --auto-remove build-essential pkg-config
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -56,8 +57,8 @@ COPY --from=build /rails/app /rails/app
 COPY --from=build /rails/vendor /rails/vendor
 
 # Copy built artifacts: gems, application
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
+# COPY --from=build /usr/local/bundle /usr/local/bundle
+# COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
