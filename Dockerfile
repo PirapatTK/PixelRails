@@ -19,7 +19,7 @@ FROM base as build
 # Install packages needed to build gems
 # And remove unused dependencies to reduce image size
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config && \
+    apt-get install --no-install-recommends -y build-essential pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
