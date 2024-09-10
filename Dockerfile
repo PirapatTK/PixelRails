@@ -7,11 +7,15 @@ FROM registry.docker.com/library/ruby:$RUBY_VERSION-alpine AS base
 # Set the working directory
 WORKDIR /rails
 
+# Enable edge repository to install libvips-dev
+RUN echo "@edge https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+
 # Install required dependencies
 RUN apk add --no-cache \
     build-base \
     git \
-    libvips-dev \
+    vips@edge \
+    vips-dev@edge \
     nodejs \
     yarn \
     postgresql-dev \
@@ -25,9 +29,6 @@ ENV RAILS_ENV="production" \
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
-
-# Install packages needed to build gems
-RUN apk add --no-cache build-base git libvips-dev
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -48,7 +49,7 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 FROM base
 
 # Install production dependencies
-RUN apk add --no-cache libvips libpq postgresql-client
+RUN apk add --no-cache vips libpq postgresql-client
 
 # Copy built application artifacts from the build stage
 COPY --from=build /usr/local/bundle /usr/local/bundle
