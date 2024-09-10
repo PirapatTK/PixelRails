@@ -1,10 +1,10 @@
 # syntax = docker/dockerfile:1
-
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.3.1
+
+# Build Stage: Using Alpine Linux to reduce size
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-alpine AS base
 
-# Rails app lives here
+# Set the working directory
 WORKDIR /rails
 
 # Install required dependencies
@@ -21,22 +21,15 @@ RUN apk add --no-cache \
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
-
+    BUNDLE_WITHOUT="development test"
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
+RUN apk add --no-cache build-base git libvips-dev
 
 # Install application gems
-# COPY Gemfile Gemfile.lock ./
-# RUN bundle install && \
-#     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-#     bundle exec bootsnap precompile --gemfile
-
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs=4 && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
