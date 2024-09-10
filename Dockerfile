@@ -17,7 +17,6 @@ ENV RAILS_ENV="production" \
 FROM base as build
 
 # Install packages needed to build gems
-# And remove unused dependencies to reduce image size
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
@@ -43,7 +42,7 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl && \
+    apt-get install --no-install-recommends -y && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Copy only necessary files from build stage
