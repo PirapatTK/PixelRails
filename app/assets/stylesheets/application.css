@@ -525,8 +525,22 @@ table th {
   transition: background-color 0.3s;
 }
 
-.hidden {
-  display: none;
+@keyframes scaleDown {
+  from {
+    height: 390px;
+  }
+  to {
+    height: 0px;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    height: 0px;
+  }
+  to {
+    height: 390px;
+  }
 }
 
 @keyframes fadeInUpSmall{
@@ -578,6 +592,24 @@ table th {
 
   .flex-grid-4 {
     grid-template-columns: repeat(1, 1fr);
+  }
+
+  @keyframes scaleDown {
+    from {
+      height: 620px;
+    }
+    to {
+      height: 0px;
+    }
+  }
+  
+  @keyframes scaleUp {
+    from {
+      height: 0px;
+    }
+    to {
+      height: 620px;
+    }
   }
   
 }
