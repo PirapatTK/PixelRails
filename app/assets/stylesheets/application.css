@@ -384,11 +384,20 @@ select {
   background-color: #f9f9f9;
 }
 
+.search-input {
+  width: 100%;
+  padding: 8px 20px 8px 20px;
+  height: 35px;
+  font-size: .8rem;
+  border: none;
+  background-color: white;
+  color: var(--text-title);
+  border-radius: 100px;
+  transition: background-color 0.3s;
+}
+
 .catagory-box {
-  max-width: 600px;
-  width: 90%;
-  display: flex;
-  flex-direction: row;
+  width: 100%;
   gap: 10px;
   margin-top: 15px;
 }
@@ -440,7 +449,8 @@ table th {
 
 .users_list_box {
   margin: auto;
-  width: 90%;
+  width: 100%;
+  max-width: 600px;
   margin-top: 25px;
   max-width: 600px;
   background-color: var(--text-white-muted);
@@ -477,6 +487,12 @@ table th {
   display: block;
 }
 
+#catagory-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .bg-white {
   background-color: var(--text-white);
   padding-left: 10px;
@@ -484,6 +500,16 @@ table th {
 
 .fade-in-up-small {
   animation: fadeInUpSmall 0.3s ease-in-out;
+}
+
+.search-bar {
+  padding-top: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 10px;
 }
 
 @keyframes fadeInUpSmall{

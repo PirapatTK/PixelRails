@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_categories
   before_action :set_selected_category, only: [:index]
+  before_action :set_search, only: [:index]
 
   def set_categories
     @catagories = ['All','Math', 'Science', 'History', 'English']
@@ -8,6 +9,10 @@ class UsersController < ApplicationController
 
   def set_selected_category
     @selected_category = params[:category] || "All"
+  end
+
+  def set_search
+    @search = params[:search] || ""
   end
 
   def index
@@ -18,7 +23,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @users = User.all
-    @selected_category = @user.subject
+    @selected_category = "All"
     
     if @user.save
       respond_to do |format|
@@ -29,9 +34,8 @@ class UsersController < ApplicationController
               turbo_stream.replace('users_list_div', partial: 'users/users_list', locals: { users: @users })
             else 
               # turbo_stream.prepend('users_lists', partial: 'users/user', locals: { user: @user })
-              turbo_stream.replace('users_list_box', partial: 'users/users_list', locals: { users: @users })
+              turbo_stream.replace('users_list_div', partial: 'users/users_list', locals: { users: @users })
             end,
-            turbo_stream.replace('catagory-menu', partial: 'users/catagory'),
           ]
         end
       end
@@ -67,8 +71,7 @@ class UsersController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace('user_form', partial: 'users/form', locals: { user: User.new }),
-            turbo_stream.replace('users_list_box', partial: 'users/users_list', locals: { users: @users }),
-            turbo_stream.replace('catagory-menu', partial: 'users/catagory'),
+            turbo_stream.replace('users_list_div', partial: 'users/users_list', locals: { users: @users }),
           ]
         end
       end
