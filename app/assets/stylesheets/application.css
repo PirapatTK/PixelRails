@@ -512,6 +512,19 @@ table th {
   gap: 10px;
 }
 
+.btn-close {
+  width: auto;
+  padding: 8px 15px 8px 15px;
+  height: 35px;
+  font-size: .8rem;
+  border: none;
+  background-color: rgb(240, 240, 240);
+  color: var(--text-title);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 @keyframes fadeInUpSmall{
   from {
     opacity: 0;

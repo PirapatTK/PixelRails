@@ -1,8 +1,12 @@
 <turbo-frame id="user_form">
   <%= form_with model: user, url: user.persisted? ? user_path(user) : users_path, method: user.persisted? ? :patch : :post, local: true, class: 'container' do |f| %>
     <div class="flex-col-start">
-
-      <h1><%= user.persisted? ? 'Edit User' : 'Register Form' %></h1>
+      <div class="flex-row-between">
+        <h1><%= user.persisted? ? 'Edit User' : 'Register Form' %></h1>
+        <button class="btn-close" type="button">
+          Close
+        </button>
+      </div>
 
       <div class="flex-row-center gap-xl">
         <div class="field">
