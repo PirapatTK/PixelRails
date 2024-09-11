@@ -23,7 +23,7 @@
           <div id="users_lists" class="flex-col-start">
             <% if @users.present? %>
               <% filtered_users = @users.order(updated_at: :desc).filter { |user| user.subject == @selected_category || @selected_category == "All" } %>
-              
+              <% filtered_users = filtered_users.filter { |user| user.first_name.downcase.include?(@search.downcase) || user.last_name.downcase.include?(@search.downcase) } %>
               <% if filtered_users.any? %>
                 <% filtered_users.each do |user| %>
                   <%= render 'user', user: user %>
