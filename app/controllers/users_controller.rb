@@ -91,7 +91,10 @@ class UsersController < ApplicationController
         if @users.any?
           render turbo_stream: turbo_stream.remove(@user)
         else
-          render turbo_stream: turbo_stream.remove('users_list_box')
+          render turbo_stream: [
+            turbo_stream.remove(@user),
+            turbo_stream.replace('users_list_div', partial: 'users/users_list', locals: { users: @users }),
+          ]
         end
       end
       format.html { redirect_to users_path, notice: 'User was successfully destroyed.' }

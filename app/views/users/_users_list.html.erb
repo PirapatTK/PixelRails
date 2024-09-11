@@ -20,13 +20,12 @@
     </div>
     
     <div id="users_list_box" class="users_list_box fade-in-up-scale">
-      <% if @users.present? %>
         <div class="flex-col-start">
           <h2 class="mb-md">Users list</h2>
           <div id="users_lists" class="flex-col-start">
             <% if @users.present? %>
               <% filtered_users = @users.order(updated_at: :desc).filter { |user| user.subject == @selected_category || @selected_category == "All" } %>
-              <% filtered_users = filtered_users.filter { |user| user.first_name.downcase.include?(@search.downcase) || user.last_name.downcase.include?(@search.downcase) } %>
+              <% filtered_users = filtered_users.filter { |user| user.first_name.downcase.include?(@search.downcase) || user.last_name.downcase.include?(@search.downcase) } if @search.present? %>
               <% if filtered_users.any? %>
                 <% filtered_users.each do |user| %>
                   <%= render 'user', user: user %>
@@ -39,7 +38,6 @@
             <% end %>
           </div>
         </div>
-      <% end %>
     </div>
   </div>
 <% end %>
