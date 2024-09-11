@@ -1,5 +1,13 @@
 <%= turbo_frame_tag 'users_list_div' do %>
   <div id="users_list_div">
+
+    <%= form_with(url: users_path, method: :get, data: { turbo_frame: 'users_list_div' }, local: true) do %>
+      <div class="search-bar">
+        <%= text_field_tag :search, @search, placeholder: 'Search by name', class: 'search-input' %>
+        <button type="submit" class="btn-white">Search</button>
+      </div>
+    <% end %>
+
     <div id="catagory-menu" class="catagory-box">
       <% @catagories.each do |catagory| %>
         <%= form_with(url: users_path, method: :get, data: { turbo_frame: 'users_list_div' }, local: true) do %>
@@ -10,12 +18,7 @@
         <% end %>
       <% end %>
     </div>
-    <%= form_with(url: users_path, method: :get, data: { turbo_frame: 'users_list_div' }, local: true) do %>
-      <div class="search-bar">
-        <%= text_field_tag :search, @search, placeholder: 'Search by name', class: 'search-input' %>
-        <button type="submit" class="btn-white">Search</button>
-      </div>
-    <% end %>
+    
     <div id="users_list_box" class="users_list_box fade-in-up-scale">
       <% if @users.present? %>
         <div class="flex-col-start">
