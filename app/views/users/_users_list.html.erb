@@ -2,13 +2,20 @@
   <% if @users.present? %>
     <div class="flex-col-start">
       <h2 class="mb-md">Users list</h2>
-        <div id="users_lists" class="flex-col-start">
-          <% if @users.present? %>
-            <% @users.order(updated_at: :desc).each do |user| %>
+      <div id="users_lists" class="flex-col-start">
+        <% if @users.present? %>
+          <% filtered_users = @users.order(updated_at: :desc).filter { |user| user.subject == @selected_category || @selected_category == 'All' } %>
+          <% if filtered_users.any? %>
+            <% filtered_users.each do |user| %>
               <%= render 'user', user: user %>
             <% end %>
+          <% else %>
+            <p>No users found for the selected category.</p>
           <% end %>
-        </div>
+        <% else %>
+          <p>No users found.</p>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>
