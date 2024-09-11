@@ -392,7 +392,7 @@ select {
   border: none;
   background-color: white;
   color: var(--text-title);
-  border-radius: 100px;
+  border-radius: 10px;
   transition: background-color 0.3s;
 }
 
@@ -400,6 +400,9 @@ select {
   width: 100%;
   gap: 10px;
   margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  margin-left: 15px;
 }
 
 .radio-group {
@@ -451,7 +454,7 @@ table th {
   margin: auto;
   width: 90%;
   max-width: 600px;
-  margin-top: 25px;
+  margin-top: 15px;
   max-width: 600px;
   background-color: var(--text-white-muted);
   display: flex;
@@ -487,12 +490,6 @@ table th {
   display: block;
 }
 
-#catagory-menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .bg-white {
   background-color: var(--text-white);
   padding-left: 10px;
@@ -504,9 +501,10 @@ table th {
 
 .search-bar {
   padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin: 0 auto;
   max-width: 600px;
-  width: 90%;
   display: grid;
   grid-template-columns: 1fr 90px;
   gap: 10px;
@@ -523,6 +521,16 @@ table th {
   border-radius: 100px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.filter-box{
+  background-color: #ddd;
+  max-width: 600px;
+  width: 90%;
+  border-radius: 15px;
+  margin: 0 auto;
+  margin-top: 25px;
+  padding-bottom: 15px;
 }
 
 @keyframes scaleDown {
