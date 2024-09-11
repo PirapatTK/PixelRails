@@ -1,4 +1,15 @@
 class UsersController < ApplicationController
+  before_action :set_categories
+  before_action :set_selected_category, only: [:index]
+
+  def set_categories
+    @catagories = ['All','Math', 'Science', 'History', 'English']
+  end
+
+  def set_selected_category
+    @selected_category = params[:category] || 'All'
+  end
+
   def index
     @users = User.all
     @user = User.new
