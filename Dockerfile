@@ -11,19 +11,19 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
+    BUNDLE_WITHOUT="development"
+
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential pkg-config && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    apt-get install --no-install-recommends -y build-essential git libvips pkg-config
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --no-cache && \
+RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
@@ -42,18 +42,8 @@ FROM base
 
 # Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y && \
+    apt-get install --no-install-recommends -y curl libsqlite3-0 libvips && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Copy only necessary files from build stage
-COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails/public /rails/public
-COPY --from=build /rails/bin /rails/bin
-COPY --from=build /rails/config /rails/config
-COPY --from=build /rails/db /rails/db
-COPY --from=build /rails/lib /rails/lib
-COPY --from=build /rails/app /rails/app
-COPY --from=build /rails/vendor /rails/vendor
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
