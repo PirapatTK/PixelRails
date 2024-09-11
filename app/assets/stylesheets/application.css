@@ -525,6 +525,10 @@ table th {
   transition: background-color 0.3s;
 }
 
+.hidden {
+  display: none;
+}
+
 @keyframes fadeInUpSmall{
   from {
     opacity: 0;
