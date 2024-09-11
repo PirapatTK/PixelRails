@@ -42,7 +42,7 @@
       </div>
       <div class="field">
         <%= f.label :subject %>
-        <%= f.select :subject, @catagories, { prompt: 'Select a subject' }, required: true %>
+        <%= f.select :subject, @categories.drop(1), { prompt: 'Select a subject' }, required: true %>
       </div>
       <%= f.submit user.persisted? ? 'Update' : 'Submit', class: 'btn-primary mt-xl' %>
     </div>

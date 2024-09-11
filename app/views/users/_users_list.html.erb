@@ -7,12 +7,12 @@
           <button type="submit" class="btn-secondary">Search</button>
         </div>
       <% end %>
-      <div id="catagory-menu" class="catagory-box">
-        <% @catagories.each do |catagory| %>
+      <div id="category-menu" class="category-box">
+        <% @categories.each do |category| %>
           <%= form_with(url: users_path, method: :get, data: { turbo_frame: 'users_list_div' }, local: true) do %>
-            <%= hidden_field_tag :category, catagory %>
-            <button type="submit" class="<%= @selected_category == catagory ? 'btn-white-select' : 'btn-white' %>">
-              <span><%= catagory %></span>
+            <%= hidden_field_tag :category, category %>
+            <button type="submit" class="<%= @selected_category == category ? 'btn-white-select' : 'btn-white' %>">
+              <span><%= category %></span>
             </button>
           <% end %>
         <% end %>

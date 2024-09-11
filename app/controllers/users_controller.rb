@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_search, only: [:index]
 
   def set_categories
-    @catagories = ['All','Math', 'Science', 'History', 'English']
+    @categories = ['All','Math', 'Science', 'History', 'English']
   end
 
   def set_selected_category
