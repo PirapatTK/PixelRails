@@ -1,7 +1,16 @@
 <div class="bg">
-    <%= render partial: 'form', locals: { user: @user } %>
-
-    <div id="users_list_div">
-        <%= render 'users_list' if @users.present? %>
-    </div>
+  <%= render partial: 'form', locals: { user: @user } %>
+  <div class="catagory-box">
+    <% @catagories.each do |catagory| %>
+      <%= form_with(url: users_path, method: :get, data: { turbo_frame: 'users_list_div' }, local: true) do %>
+        <%= hidden_field_tag :category, catagory %>
+        <button type="submit" class="<%= @selected_category == catagory ? 'btn-white-select' : 'btn-white' %>">
+          <span><%= catagory %></span>
+        </button>
+      <% end %>
+    <% end %>
+  </div>
+  <div id="users_list_div">
+    <%= render 'users_list' if @users.present? %>
+  </div>
 </div>
