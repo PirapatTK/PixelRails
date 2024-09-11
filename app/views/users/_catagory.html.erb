@@ -1,0 +1,10 @@
+<div id="catagory-menu" class="catagory-box">
+    <% @catagories.each do |catagory| %>
+      <%= form_with(url: users_path, method: :get, data: { turbo_frame: 'users_list_div' }, local: true) do %>
+        <%= hidden_field_tag :category, catagory %>
+        <button type="submit" class="<%= @selected_category == catagory ? 'btn-white-select' : 'btn-white' %>">
+          <span><%= catagory %></span>
+        </button>
+      <% end %>
+    <% end %>
+  </div>

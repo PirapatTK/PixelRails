@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def set_selected_category
-    @selected_category = params[:category] || 'All'
+    @selected_category = params[:category] || "All"
   end
 
   def index
@@ -18,7 +18,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @users = User.all
-  
+    @selected_category = @user.subject
+    
     if @user.save
       respond_to do |format|
         format.turbo_stream do
@@ -27,8 +28,10 @@ class UsersController < ApplicationController
             if @users.length == 1
               turbo_stream.replace('users_list_div', partial: 'users/users_list', locals: { users: @users })
             else 
-              turbo_stream.prepend('users_lists', partial: 'users/user', locals: { user: @user })
-            end
+              # turbo_stream.prepend('users_lists', partial: 'users/user', locals: { user: @user })
+              turbo_stream.replace('users_list_box', partial: 'users/users_list', locals: { users: @users })
+            end,
+            turbo_stream.replace('catagory-menu', partial: 'users/catagory'),
           ]
         end
       end
@@ -41,6 +44,7 @@ class UsersController < ApplicationController
   def edit
     @users = User.all
     @user = User.find(params[:id])
+
     if @user == nil
       redirect_to users_path
     end
@@ -56,13 +60,15 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @users = User.all
+    @selected_category = "All"
+    
     if @user.update(user_params)
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace('user_form', partial: 'users/form', locals: { user: User.new }),
-            # turbo_stream.replace('user_' + @user.id.to_s, partial: 'users/user', locals: { user: @user })
-            turbo_stream.replace('users_list_box', partial: 'users/users_list', locals: { users: @users })
+            turbo_stream.replace('users_list_box', partial: 'users/users_list', locals: { users: @users }),
+            turbo_stream.replace('catagory-menu', partial: 'users/catagory'),
           ]
         end
       end
