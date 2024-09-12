@@ -386,23 +386,26 @@ select {
 
 .search-input {
   width: 100%;
-  padding: 8px 20px 8px 20px;
+  padding: 8px 10px 8px 10px;
   height: 35px;
   font-size: .8rem;
   border: none;
   background-color: white;
   color: var(--text-title);
+  border: 1px solid #ddd;
   border-radius: 10px;
   transition: background-color 0.3s;
 }
 
 .category-box {
-  width: 100%;
   gap: 10px;
   margin-top: 15px;
   display: flex;
   flex-direction: row;
-  margin-left: 15px;
+  padding: 0px 15px 0px 15px;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .radio-group {
@@ -524,12 +527,12 @@ table th {
 }
 
 .filter-box{
-  background-color: #ddd;
+  background-color: var(--text-white-muted);
   max-width: 600px;
   width: 90%;
   border-radius: 15px;
   margin: 0 auto;
-  margin-top: 25px;
+  margin-top: 15px;
   padding-bottom: 15px;
 }
 
